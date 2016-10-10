@@ -2,7 +2,6 @@ package com.woc.wocChat.server.user.Service;
 
 
 import com.woc.wocChat.server.MySQL.SQLBase;
-import com.woc.wocChat.server.user.model.User;
 
 /**
  * Created by 10397 on 2016/6/14.

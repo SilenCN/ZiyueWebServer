@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-import static com.woc.wocChat.SQLInit.*;
+import static com.woc.wocChat.server.SQLInit.*;
 
 /**
  * Created by 10397 on 2016/6/13.
