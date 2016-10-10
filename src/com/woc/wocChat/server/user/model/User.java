@@ -4,13 +4,14 @@ package com.woc.wocChat.server.user.model;
  * Created by silen on 16-10-10.
  */
 public class User {
-    private long id=0;
+    private long id=-1;
     private String sign="";
     private long signUpTime;
     private long chatPartnerId=0;
     private String username="";
     private String password="";
     private long lastLogin;
+
     public long getId() {
         return id;
     }
