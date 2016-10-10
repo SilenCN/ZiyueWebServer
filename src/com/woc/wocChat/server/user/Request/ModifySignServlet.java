@@ -12,7 +12,10 @@ import java.io.IOException;
 /**
  * <pr>
  *     link:http://localhost:8080/User/ModifySign?UserId=&Sign=
+ *     UserId:用户ｉｄ号　int
+ *     Sign:用户修改的Sign  string
  *
+ *     return turn/false;
  * </pr>
  *
  * Created by silen on 16-10-10.
