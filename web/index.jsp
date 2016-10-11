@@ -12,5 +12,8 @@
   </head>
   <body>
   $END$
+  <%
+  out.print(System.currentTimeMillis());
+  %>
   </body>
 </html>
