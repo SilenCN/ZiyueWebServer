@@ -1,7 +1,10 @@
 package com.woc.wocChat.server.chat.socket;
 
 import com.google.gson.Gson;
+import com.woc.wocChat.server.msg.MsgConst;
+import com.woc.wocChat.server.msg.handle.MsgHandle;
 import com.woc.wocChat.server.msg.model.Msg;
+import com.woc.wocChat.server.queue.WaitQueue;
 import com.woc.wocChat.server.user.model.User;
 
 import java.io.*;
@@ -17,9 +20,9 @@ public class ChatSocketHandler implements Runnable {
     PrintStream out;
     BufferedReader buf;
     ChatSocketHandler partnerSocket;
-    public ChatSocketHandler(Socket client, User user) {
+    boolean flag=true;
+    public ChatSocketHandler(Socket client) {
         this.client = client;
-        this.user=user;
         new Thread(this).start();
     }
 
@@ -51,6 +54,9 @@ public class ChatSocketHandler implements Runnable {
         }
     }
 
+    public void setUser(User user){
+        this.user=user;
+    }
     public void sendMsgToPartner(Msg msg){
         partnerSocket.sendMsgToClient(msg);
     }
@@ -59,13 +65,24 @@ public class ChatSocketHandler implements Runnable {
     }
     public void setPartnerSocket(ChatSocketHandler partnerSocket){
         this.partnerSocket=partnerSocket;
-        setPartnerForSelf();
-    }
-    private void setPartnerForSelf(){
-        partnerSocket.setPartnerSocket(this);
+        this.sendMsgToClient(MsgHandle.createMsg(MsgConst.MSG_STATUS_TYPE_SYSTEMMSG,MsgConst.MSG_STATUS_ONLINE,new Gson().toJson(getUser())));
     }
 
     public void chatExit(){
+        if (null!=partnerSocket){
+            partnerSocket.partnerExit();
+        }else if (null!=user){
+            //TODO:从队列中移除
+        }
+        this.sendMsgToClient(MsgHandle.createMsg(MsgConst.MSG_STATUS_TYPE_SYSTEMMSG,MsgConst.MSG_STATUS_EXIT,"true"));
+        flag=false;
+    }
 
+    public void partnerExit(){
+        this.sendMsgToClient(MsgHandle.createMsg(MsgConst.MSG_STATUS_TYPE_SYSTEMMSG,MsgConst.MSG_STATUS_OFFLINE,"对方退出聊天,正在重新匹配"));
+        WaitQueue.add(this);
+    }
+    public User getUser(){
+        return this.user;
     }
 }

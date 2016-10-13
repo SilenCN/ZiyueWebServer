@@ -12,16 +12,15 @@ import java.net.Socket;
  */
 public class ChatServer {
     public static final int PORT = 65521;//监听的端口号
-
+    private static ServerSocket serverSocket;
     public ChatServer() {
         init();
     }
 
     public void init() {
         try {
-            ServerSocket serverSocket = new ServerSocket(PORT);
+            serverSocket = new ServerSocket(PORT);
             while (true) {
-                // 一旦有堵塞, 则表示服务器与客户端获得了连接
                 new ChatSocketHandler(serverSocket.accept());
             }
         } catch (Exception e) {

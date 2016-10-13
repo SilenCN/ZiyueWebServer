@@ -21,6 +21,7 @@ public class WaitQueue {
 
     private static void matchPartner(){
         queue.get(0).setPartnerSocket(queue.get(1));
+        queue.get(1).setPartnerSocket(queue.get(0));
         queue.remove(0);
         queue.remove(0);
     }
