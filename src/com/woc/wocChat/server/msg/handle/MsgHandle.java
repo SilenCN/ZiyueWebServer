@@ -9,6 +9,8 @@ public class MsgHandle {
     public static boolean isExit(int status){
         if (MSG_STATUS_OFFLINE==status){
             return true;
+        }else{
+            return false;
         }
     }
 
