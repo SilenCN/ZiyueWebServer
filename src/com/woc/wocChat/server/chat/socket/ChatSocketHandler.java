@@ -1,5 +1,8 @@
 package com.woc.wocChat.server.chat.socket;
 
+import com.google.gson.Gson;
+import com.woc.wocChat.server.msg.model.Msg;
+
 import java.io.*;
 import java.net.Socket;
 
@@ -31,8 +34,8 @@ public class ChatSocketHandler implements Runnable {
                     if ("bye".equals(str)) {
                         flag = false;
                     } else {
-                        //将接收到的字符串前面加上echo，发送到对应的客户端
-                        out.println("echo:" + str);
+                        Msg msg= new Gson().fromJson(str,Msg.class);
+
                     }
                 }
             }
